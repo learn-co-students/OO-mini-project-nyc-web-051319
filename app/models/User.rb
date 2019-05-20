@@ -32,17 +32,30 @@ class User
     Allergy.all.select { |allergy| allergy.user == self}
   end
 
+  def allergens_name
+    allergens.map do |allergy|
+      allergy.ingredient
+    end
+  end
+
   def top_three_recipes
-    best_recipes = RecipeCard.all.sort_by { |recipecard| recipecard.rating }.reverse
-    super_recipes = best_recipes.select do |recipecard|
+    super_recipes = RecipeCard.all.select do |recipecard|
       recipecard.user == self
     end
-    super_recipes[0..2].map do |recipecard|
+    best_recipes = super_recipes.sort_by { |recipecard| recipecard.rating }.reverse
+    best_recipes[0..2].map do |recipecard|
       recipecard.recipe
     end
   end
 
   def most_recent_recipe
     RecipeCard.all.sort_by { |recipecard| recipecard.date }.reverse.first.recipe
+  end
+
+  def safe_recipes
+    super_recipes = RecipeCard.all.select do |recipecard|
+      recipecard.user == self
+    end
+    super_recipes.delete_if {|recipecard| (recipecard.recipe.ingredients & allergens_name).any? }
   end
 end
