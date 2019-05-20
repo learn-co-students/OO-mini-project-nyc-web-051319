@@ -5,7 +5,7 @@ class RecipeIngredient
   def initialize(recipe, ingredient)
     @recipe = recipe
     @ingredient = ingredient
-    recipe.ingredient << ingredient
+    # recipe.ingredient << ingredient
     @@all << self
   end
 
@@ -13,11 +13,4 @@ class RecipeIngredient
     @@all
   end
 
-  def ingredient
-    # return the ingredient instance
-  end
-
-  def recipe
-    # return the recipe instance
-  end
 end

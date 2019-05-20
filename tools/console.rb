@@ -32,6 +32,10 @@ rc2 = RecipeCard.new(hamburger, dean, "2017-02-24", 6)
 rc3 = RecipeCard.new(sushi, jamie, "2014-10-13", 5)
 rc4 = RecipeCard.new(sandwich, chris, "2008-09-10", 4)
 rc5 = RecipeCard.new(pie, dean, "2018-05-24", 10)
+rc6 = RecipeCard.new(sushi, dean, "2018-05-25", 9)
+rc7 = RecipeCard.new(pizza, dean, "2018-05-23", 2)
+
+
 
 ri1 = RecipeIngredient.new(pie, flour)
 ri2 = RecipeIngredient.new(pie, blueberry)

@@ -59,6 +59,11 @@ class Recipe
 
   def ingredients
     # return ingredients in this recipe
+    RecipeIngredient.all.each do |recipe|
+      if recipe.recipe == self
+        @ingredient << recipe.ingredient
+      end
+    end
     @ingredient
   end
 
