@@ -2,15 +2,13 @@ require 'pry'
 
 class Recipe
 
-  attr_accessor :name, :ingredients
+  attr_accessor :name
 
   @@all = []
 
   def initialize(name, ingredients)
     @name = name
-    @ingredients = []
-    @ingredients << ingredients
-    @ingredients.flatten!
+    self.add_ingredients(ingredients)
     @@all << self
   end
 
@@ -46,9 +44,14 @@ class Recipe
     allergens
   end
 
+  def get_all_recipeingredients 
+    RecipeIngredient.all.select{|ri| ri.recipe == self}
+  end
+
   def add_ingredients(ingredients)
-    @ingredients << ingredients
-    @ingredients.flatten!.uniq
+    ingredients.each do |ingredient|
+      RecipeIngredient.new(ingredient, self) unless get_all_recipeingredients.ingredient.include?(ingredient)
+    end
   end
 
 end

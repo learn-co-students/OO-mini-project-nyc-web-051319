@@ -13,11 +13,12 @@ class User
     @@all
   end
 
-  def recipes
+  def my_recipecards
     recipe_cards = RecipeCard.all.select { |recipecard| recipecard.user == self}
-    recipe_cards.map do |recipecard|
-      recipecard.recipe
-    end
+  end
+
+  def recipes
+    my_recipecards.map {|recipecard| recipecard.recipe}
   end
 
   def add_recipe_card(recipe, date, rating)
@@ -39,11 +40,8 @@ class User
   end
 
   def top_three_recipes
-    super_recipes = RecipeCard.all.select do |recipecard|
-      recipecard.user == self
-    end
-    best_recipes = super_recipes.sort_by { |recipecard| recipecard.rating }.reverse
-    best_recipes[0..2].map do |recipecard|
+    sorted_rating = my_recipecards.sort_by { |recipecard| recipecard.rating }.reverse
+    sorted_rating[0..2].map do |recipecard|
       recipecard.recipe
     end
   end
@@ -53,9 +51,6 @@ class User
   end
 
   def safe_recipes
-    super_recipes = RecipeCard.all.select do |recipecard|
-      recipecard.user == self
-    end
-    super_recipes.delete_if {|recipecard| (recipecard.recipe.ingredients & allergens_name).any? }
+    my_recipecards.delete_if {|recipecard| (recipecard.recipe.ingredients & allergens_name).any? }
   end
 end

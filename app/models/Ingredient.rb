@@ -13,8 +13,7 @@ class Ingredient
   end
 
   def self.most_common_allergen
-    allergy_count = Allergy.all.sort_by { |allergy| allergy.user_count }.reverse.first
-    allergy_count.ingredient
+    Allergy.all.sort_by { |allergy| allergy.user_count }.reverse.first.ingredient
   end
 
 end
